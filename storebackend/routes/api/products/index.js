@@ -3,17 +3,9 @@ var router = express.Router();
 var fileModel = require('../filemodel');
 
 
-var prodCollection = [];
+var prodCollection = fileModel.getProducts();
 
-fileModel.loadFromFile(
-  function(err, savedCollection){
-    if(err){
-      return;
-    }
-    prodCollection = savedCollection;
-    return;
-  }
-);
+
 
 
 
@@ -32,10 +24,12 @@ router.get('/', function (req, res) {
 */
 
 router.get('/all', function(req, res){
+  prodCollection = fileModel.getProducts();
   res.json(prodCollection);
 }); // get /all
 
 router.post('/new', function(req, res){
+   prodCollection = fileModel.getProducts();
    var newProduct = Object.assign(
       {},
       req.body,
@@ -51,7 +45,7 @@ router.post('/new', function(req, res){
    )
    if( ! productExists ){
      prodCollection.push(newProduct);
-     fileModel.saveToFile(
+     fileModel.setProducts(
         prodCollection,
         function(err, savedSuccesfully){
           if(err){
@@ -68,6 +62,7 @@ router.post('/new', function(req, res){
 
 router.put('/update/:prdsku',
   function(req, res){
+      prodCollection = fileModel.getProducts();
       var prdskuToModify = req.params.prdsku;
       var amountToAdjust = parseInt(req.body.ajustar);
       var adjustType = req.body.tipo || 'SUB';
@@ -83,7 +78,7 @@ router.put('/update/:prdsku',
         }
       ); // end map
     prodCollection = newProductArray;
-    fileModel.saveToFile(
+    fileModel.setProducts(
       prodCollection,
       function (err, savedSuccesfully) {
         if (err) {
@@ -104,6 +99,7 @@ router.put('/update/:prdsku',
 router.delete(
   '/delete/:prdsku',
   function( req, res) {
+    prodCollection = fileModel.getProducts();
     var prdSkuToDelete  = req.params.prdsku;
     var newProdCollection = prodCollection.filter(
       function(o, i){
@@ -111,7 +107,7 @@ router.delete(
       }
     ); //filter
     prodCollection = newProdCollection;
-    fileModel.saveToFile(
+    fileModel.setProducts(
       prodCollection,
       function (err, savedSuccesfully) {
         if (err) {
