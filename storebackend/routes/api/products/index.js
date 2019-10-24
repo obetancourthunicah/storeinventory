@@ -65,7 +65,13 @@ router.post('/new', function(req, res){
    } else {
      res.status(400).json({"error":"No se pudo ingresar objeto"});
    } */
-   prdModel.saveNewProduct(req.body, (err, rslt)=>{
+   var newProd = Object.assign(
+      {},
+      req.body,
+      { "stock":parseInt(req.body.stock),
+        "price":parseFloat(req.body.price)}
+    );
+   prdModel.saveNewProduct(newProd, (err, rslt)=>{
      if(err){
        res.status(500).json(err);
      }else{
@@ -74,9 +80,9 @@ router.post('/new', function(req, res){
    });// saveNewProduct
 }); // post /new
 
-router.put('/update/:prdsku',
+router.put('/update/:prdid',
   function(req, res){
-      prodCollection = fileModel.getProducts();
+      /*prodCollection = fileModel.getProducts();
       var prdskuToModify = req.params.prdsku;
       var amountToAdjust = parseInt(req.body.ajustar);
       var adjustType = req.body.tipo || 'SUB';
@@ -101,7 +107,21 @@ router.put('/update/:prdsku',
           res.json(modProduct);  // req.body ===  $_POST[]
         }
       }
-    );
+    );*/
+    var prdIdToModify = req.params.prdid;
+    var amountToAdjust = parseInt(req.body.ajustar);
+    var adjustType = req.body.tipo || 'SUB';
+    prdModel.updateProduct(
+      {stock:amountToAdjust,
+      type:adjustType}, prdIdToModify,
+      (err, rsult)=>{
+        if(err){
+          res.status(500).json(err);
+        }else{
+          res.status(200).json(rsult);
+        }
+      }
+      ); //updateProduct
   }
 );// put :prdsku
 
