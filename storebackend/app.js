@@ -5,7 +5,9 @@ var cookieParser = require('cookie-parser');
 var lessMiddleware = require('less-middleware');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
+
+function initApp(db){
+
 
 var app = express();
 
@@ -20,9 +22,10 @@ app.use(cookieParser());
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
+var indexRouter = require('./routes/index');
 app.use('/', indexRouter);
 // incluir las rutas especificas para la entidad
-var apiRouter = require('./routes/api/index');
+var apiRouter = require('./routes/api/index')(db);
 app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
@@ -41,4 +44,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+ return app;
+}// end initApp
+
+module.exports = initApp;

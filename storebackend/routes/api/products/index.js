@@ -1,13 +1,12 @@
 var express = require('express');
 var router = express.Router();
+
+function initProductsApi(db){
+
+var prdModel = require('./products.model')(db);
+
 var fileModel = require('../filemodel');
-
-
 var prodCollection = fileModel.getProducts();
-
-
-
-
 
 router.get('/', function (req, res) {
   res.json({
@@ -24,12 +23,20 @@ router.get('/', function (req, res) {
 */
 
 router.get('/all', function(req, res){
-  prodCollection = fileModel.getProducts();
+  /*prodCollection = fileModel.getProducts();
   res.json(prodCollection);
+  */
+  prdModel.getAllProducts((err, productos)=>{
+    if(err){
+      res.status(404).json([]);
+    } else {
+      res.status(200).json(productos);
+    }
+  });// end getAllProducts
 }); // get /all
 
 router.post('/new', function(req, res){
-   prodCollection = fileModel.getProducts();
+   /*prodCollection = fileModel.getProducts();
    var newProduct = Object.assign(
       {},
       req.body,
@@ -57,7 +64,14 @@ router.post('/new', function(req, res){
       );
    } else {
      res.status(400).json({"error":"No se pudo ingresar objeto"});
-   }
+   } */
+   prdModel.saveNewProduct(req.body, (err, rslt)=>{
+     if(err){
+       res.status(500).json(err);
+     }else{
+       res.status(200).json(rslt);
+     }
+   });// saveNewProduct
 }); // post /new
 
 router.put('/update/:prdsku',
@@ -120,4 +134,8 @@ router.delete(
   }
 );// delete
 
-module.exports = router;
+  return router;
+} //end initProductsApi
+
+//module.exports = router;
+module.exports = initProductsApi;

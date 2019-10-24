@@ -60,6 +60,7 @@ exportObject.getSecurity = function(){
 exportObject.setSecurity = function (newSecurity, handler) {
   var newData = Object.assign({}, data, { users: newSecurity });
   exportObject.setData(newData, function (err, sucess) {
+    
     if (err) {
       handler(err, false);
     } else {
