@@ -116,7 +116,7 @@ router.put('/update/:prdid',
       type:adjustType}, prdIdToModify,
       (err, rsult)=>{
         if(err){
-          res.status(500).json(err);
+          res.status(500).json({"error":"Lo sentimos mucho, ha ocurrido un error."});
         }else{
           res.status(200).json(rsult);
         }
@@ -131,9 +131,10 @@ router.put('/update/:prdid',
 // router  get| post | put | delete
 
 router.delete(
-  '/delete/:prdsku',
+  //'/delete/:prdsku',
+  '/delete/:prdid',
   function( req, res) {
-    prodCollection = fileModel.getProducts();
+    /*prodCollection = fileModel.getProducts();
     var prdSkuToDelete  = req.params.prdsku;
     var newProdCollection = prodCollection.filter(
       function(o, i){
@@ -150,7 +151,17 @@ router.delete(
           res.json({"newProdsQty": prodCollection.length});
         }
       }
-    );
+    );*/
+    var id = req.params.prdid || '';
+    if(id===''){
+      return res.status(404).json({"error":"Identificador no válido"});
+    }
+    prdModel.deleteProduct(id , (err, rslt)=>{
+      if(err){
+        return res.status(500).json({"error":"Ocurrio un error intente de nuevo."});
+      }
+      return res.status(200).json({"msg":"Deleted OK"});
+    }); //deleteProduct 
   }
 );// delete
 

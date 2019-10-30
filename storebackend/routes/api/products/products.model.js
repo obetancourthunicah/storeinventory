@@ -68,7 +68,20 @@ function productsModel(db){
       }
     );
   }; // updateObject
+
+  productModel.deleteProduct = (id, handler)=>{
+    var query = {"_id": new ObjectId(id)}
+    productsCollection.deleteOne(query, (err, rslt)=>{
+      if(err){
+        console.log(err);
+        return handler(err, null);
+      }
+      return handler(null, rslt);
+    })//deleteOne
+  }
+
   return productModel;
 }
+
 
 module.exports = productsModel;
