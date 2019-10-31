@@ -6,7 +6,7 @@ function initApiRouter(db){
 
 
 //Rutas de Cada Entidad
-var securityApiRoutes = require('./security/index');
+var securityApiRoutes = require('./security/index')(db);
 var productsApiRoutes = require('./products/index')(db);
 var kardexApiRoutes = require('./kardex/index');
 
