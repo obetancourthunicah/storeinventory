@@ -46,7 +46,24 @@ function initUserModel(db){
     });//insertOne
   }; //agregarNuevo
 
+  userModel.obtenerXCorreo = (email, handler)=>{
+    var query = {"email": email};
+    userCollection.findOne(query, (err, user)=>{
+      if(err){
+        console.log(err);
+        return handler(err, null);
+      }
+      if(!user){
+        console.log("No se encontró usuario con " + email);
+        return handler(new Error("No se encontró Usuario"), null);
+      }
+      return handler(null, user);
+    }); //findOne
+  } //obtenerXCorreo
 
+  userModel.comparePasswords = (rawPassword, savedPassword) =>{
+    return bcrypt.compareSync(rawPassword, savedPassword);
+  }
 
   return userModel;
 }
