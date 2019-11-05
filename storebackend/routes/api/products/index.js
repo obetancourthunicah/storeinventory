@@ -65,11 +65,15 @@ router.post('/new', function(req, res){
    } else {
      res.status(400).json({"error":"No se pudo ingresar objeto"});
    } */
+   if (req.user.roles.findIndex((o)=>{return o=="administrador"}) == -1) {
+     return res.status(401).json({"error":"Sin privilegio"});
+   }
    var newProd = Object.assign(
       {},
       req.body,
       { "stock":parseInt(req.body.stock),
-        "price":parseFloat(req.body.price)}
+        "price":parseFloat(req.body.price),
+        "createdBy": req.user }
     );
    prdModel.saveNewProduct(newProd, (err, rslt)=>{
      if(err){

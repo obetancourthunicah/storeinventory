@@ -33,7 +33,7 @@ function initSecurity(db){
               return next(null, false, errorObject);
             }
             delete User.password;
-            delete User.lastPassword;
+            delete User.lastPasswords;
             delete User.active;
             delete User.dateCreated;
             return next(null, User, {"Status":"Ok"});
@@ -80,7 +80,11 @@ function initSecurity(db){
             if (err) {
               return res.status(400).json({ "Error": "Error al iniciar sesión" });
             }
-            const token = jwt.sign(user, 'cuandolosgatosnoestanlosratonesfiestahacen');
+            const token = jwt.sign(
+                user,
+                'cuandolosgatosnoestanlosratonesfiestahacen',
+                { expiresIn : '3m'}
+            );
             return res.status(200).json({ user, token });
           });
         } else {
