@@ -26,6 +26,7 @@ passport.use(
 var securityApiRoutes = require('./security/index')(db);
 var productsApiRoutes = require('./products/index')(db);
 var kardexApiRoutes = require('./kardex/index');
+var locationRoutes = require('./locations/index')(db);
 
 //localhost:3000/api/sec/
 router.use('/sec', securityApiRoutes);
@@ -41,7 +42,11 @@ router.use('/krd',
     passport.authenticate('jwt', {session:false}),
     kardexApiRoutes
 );
-
+//localhost:300/api/lcl/
+router.use('/lcl',
+    passport.authenticate('jwt', {session:false}),
+    locationRoutes
+);
 return router;
 }// end initApiRouter;
 
