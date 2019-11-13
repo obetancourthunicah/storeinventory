@@ -60,8 +60,49 @@ function initLocationModel(db){
     });
   } // agregarNuevaLocalidad
 
+  locationModel.getNearLocations = (longitud, latitud, distanceMeters, handler) =>{
+    let query = {
+      "ubicacion": {
+        "$near": {
+          "$geometry": {
+            "type": "Point",
+            "coordinates": [
+              longitud,
+              latitud
+            ]
+          },
+          "$maxDistance": distanceMeters
+        }
+      }
+    };
+    let projection = {
+      "Nombre": 1,
+      "Tipo": 1,
+      "Ranking": 1,
+      "ubicacion.coordinates":1
+    }
+    locationsCollection.find(
+      query,
+      {
+        projection: projection,
+        limit: 5
+      }
+    )
+    .toArray(
+      (err, locations)=>{
+          if(err){
+            console.log(err);
+            return handler(err, null);
+          }
+          return handler(null, locations);
+      }
+    ); // find
+  }
+
   return locationModel;
 }
+
+
 
 module.exports = initLocationModel;
 

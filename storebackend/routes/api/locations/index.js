@@ -35,8 +35,37 @@ function initLocations(db){
       } );
   }); //post new
 
-
+    router.get('/near/:longitud/:latitud/:distance', (req, res)=>{
+        let {longitud, latitud, distance}  = req.params;
+        longitud = parseFloat(longitud);
+        latitud = parseFloat(latitud);
+        distance = parseInt(distance);
+        locationModel.getNearLocations(
+          longitud,
+          latitud,
+          distance,
+          (err, Locations)=>{
+              if(err){
+                return res.status(500).json({"msg":"Error al procesar petición"});
+              }
+              return res.status(200).json(Locations);
+        })//getNear;
+    }
+  )//near
   return router;
 }
+
+/*
+Sushi to Go
+14.061012, -87.220205
+-87.220205/14.061012/5000
+*/
+
+/*
+Pollos XYZ
+14.098947, -87.189008
+-87.189008/14.098947/5000
+*/
+
 
 module.exports = initLocations;
