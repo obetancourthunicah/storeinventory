@@ -1,13 +1,22 @@
 import React, {Component} from 'react';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
+
+import PrivateRoute from './components/utilities/PrivateRoute';
+
 import Home from './components/pages/home/home.js';
 import Login from './components/pages/login/login';
+
+import Product from './components/pages/private/product/product';
+
  import './App.css';
 
 class App extends Component{
   constructor(){
     super();
     this.state={
-      currentPage:"home",
+      auth:{
+        logged:true
+      }
     };
     this.changeCurrentPage = this.changeCurrentPage.bind(this);
   }
@@ -15,6 +24,16 @@ class App extends Component{
     this.setState({currentPage:pageTo});
   }
   render(){
+    return (
+      <Router>
+        <section>
+            <Route path="/" exact  component={Home}/>
+            <Route path="/login" component={Login}/>
+            <PrivateRoute path="/product" component={Product} auth={this.state.auth}/>
+          </section>
+      </Router>
+    )
+    /*
     switch(this.state.currentPage){
       case "home":
         return (<Home changePage={this.changeCurrentPage}/>)
@@ -24,6 +43,7 @@ class App extends Component{
         break;
     }
     return (<Home />)
+    */
   }
 }
 
