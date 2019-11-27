@@ -1,9 +1,11 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import { useStateValue } from './context';
 
-export default ({component:InnerComponent, auth, ...rest })=>{
+export default ({component:InnerComponent,  ...rest })=>{
+  const [{auth}, ] = useStateValue();
   return (
-    <Route 
+    <Route
       {...rest}
       render = {
         (props)=>{
