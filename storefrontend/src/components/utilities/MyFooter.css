@@ -1,0 +1,40 @@
+footer {
+  margin: 0px;
+  padding: 0px;
+  background-color: #000;
+  color: #fff;
+}
+footer nav ul {
+  width: 100%;
+  padding: 0px;
+  list-style: none;
+  display: flex;
+  margin:0px;
+}
+footer nav ul li {
+  display: flex;
+  flex: 1;
+}
+footer nav ul li a {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  flex:1;
+  text-align: center;
+  transition: background-color 0.5s ease, color 0.5s ease;
+  background-color: #000;
+  color: #FFF;
+  text-decoration: none;
+}
+
+footer nav ul li a:hover {
+  background-color: #FFF;
+  color: #000;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+footer nav ul li a.active, footer nav ul li a.active:hover {
+  background-color: #FFF;
+  color: #000;
+  font-weight: 600;
+}

@@ -17,7 +17,7 @@ export default (props) => {
             );
             props.history.replace('/');
       }
-        }>Ir a Home</button>
+        }>Iniciar Sesión</button>
       </Page>
     );
 }
