@@ -1,0 +1,18 @@
+.loginForm {
+  display: flex;
+  flex-direction: column;
+}
+.loginForm input {
+  font-size: 1rem;
+  padding: 0.85rem 1rem;
+  border: none;
+  border-bottom: 1px #333 solid;
+  margin-top: 1rem;
+}
+.loginForm button {
+  font-size: 1rem;
+  padding: 1rem 1rem;
+  border: 1px #333 solid;
+  margin-top: 1rem;
+  border-radius:1.5rem;
+}

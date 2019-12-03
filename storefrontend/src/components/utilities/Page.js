@@ -2,10 +2,10 @@ import React from 'react';
 import MyHeader from './MyHeader';
 import MyFooter from './MyFooter';
 import './Page.css'
-const Page = ({ showHeader = true, headerTitle, showFooter=true, children})=>{
+const Page = ({ showHeader = true, headerTitle = "Simple Store Inventory", showFooter=true, children})=>{
   let header = null;
   if(showHeader){
-    header = (<MyHeader title={(headerTitle || "Simple Store Inventory")}/>);
+    header = (<MyHeader title={(headerTitle)}/>);
   }
   let footer = null;
   if(showFooter){

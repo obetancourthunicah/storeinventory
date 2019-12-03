@@ -1,13 +1,25 @@
 import React from 'react';
+import useForm from 'react-hook-form';
 import Page from '../../utilities/Page';
+import './login.css';
 //import {Link} from 'react-router-dom';
 import { useStateValue } from '../../utilities/context';
 export default (props) => {
     const [ ,dispach] = useStateValue();
     return (
-      <Page>
-        <h1>Iniciar Sesión</h1>
-        <button onClick={
+      <Page headerTitle="Iniciar Sesión">
+        <form className="loginForm" >
+          <input type="email" name="email" placeholder="correo@eletron.co"/>
+          <input type="password" name="password" placeholder="contraseña"/>
+          <button type="submit">Iniciar Sesión</button>
+        </form>
+      </Page>
+    );
+}
+
+
+/*
+ <button onClick={
           (e)=>{
             dispach(
               {
@@ -18,6 +30,4 @@ export default (props) => {
             props.history.replace('/');
       }
         }>Iniciar Sesión</button>
-      </Page>
-    );
-}
+ */
