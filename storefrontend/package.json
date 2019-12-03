@@ -2,9 +2,12 @@
   "name": "storefrontend",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3000",
   "dependencies": {
+    "axios": "^0.19.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
+    "react-hook-form": "^3.28.9",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0"
   },
