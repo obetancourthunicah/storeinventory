@@ -15,6 +15,7 @@ passport.use(
       secretOrKey: 'cuandolosgatosnoestanlosratonesfiestahacen'
     },
     (payload, next)=>{
+      console.log(payload);
       var user = payload;
       return next(null, user);
     }

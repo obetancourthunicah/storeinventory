@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { normalAxios as axios } from '../../utilities/MyAxios';
 
 export const login = (data, dispatch)=>{
   dispatch({

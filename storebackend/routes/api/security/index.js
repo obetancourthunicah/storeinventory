@@ -83,7 +83,7 @@ function initSecurity(db){
             const token = jwt.sign(
                 user,
                 'cuandolosgatosnoestanlosratonesfiestahacen',
-                { expiresIn : '3m'}
+                { expiresIn : '60m'}
             );
             return res.status(200).json({ user, token });
           });
